@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 이 문서의 형식이 configuration(환경설정)임을 알려줌 => 최상위타입이 configuration DTD : 유효성을 
+	체크해줌(현재 XML파일 안에 작성한 태그들이 configuration안에 존재해도 되는지 체크해줌) -->
+<configuration>
+
+	<!-- setting : Mybatis구동시 선언할 설정들을 작성하는 영역 -->
+	<settings>
+		<!-- 만약에 NULL로 데이터가 전달되었다면 빈칸이 아닌 NULL로 인식하겠다. -->
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<!-- typeAliases : VO클래스들의 풀 클래스명을 단순한 클래스명으로 줄여서 부르기위한 "별칭" 등록 영역 -->
+	<typeAliases>
+		<typeAlias type="com.kh.mybatis.member.model.vo.Member"
+			alias="member" />
+		<typeAlias type="com.kh.mybatis.board.model.vo.Board"
+			alias="board" />
+		<typeAlias type="com.kh.mybatis.board.model.vo.Reply"
+			alias="reply" />
+	</typeAliases>
+
+	<!-- environments : mybatis에서 연동할 DB정보들을 등록하는 영역(여러개 DB정보 등록 가능
+		=> default속성으로 여러개의 id중 어떤 db를 기본 db로 사용할건지 설정해줘야한다. -->
+	<environments default="development">
+		<environment id="development">
+			
+			<!-- transactionManager는 JDBC와 MANAGED 둘중 하나 선택할 수 있음.
+				JDBC : 트랜잭션을 내가 직접 관리한다(수동 commit)
+				MANAGED : 개발자가 트랜잭션관리에서 어떠한 영향도 끼치지 않겠다(자동 commit) -->
+			<transactionManager type="JDBC" />
+			
+			<!-- 
+				* dataSource로는 POOLED, UNPOOLED 둘중 하나 선택할 수 있음(ConnectionPool 사용 여부)
+				- ConnectionPool : Connection객체를 담아줄 수 있는 영역
+								   한번 생성된 Connection객체를 담아두면 재사용해서 쓸 수 있음
+				=> POOLED : ConnectionPool을 사용하겠다.
+				   UNPOOLED : ConnectionPool을 사용하지 않겠다.
+			 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@Localhost:1521:orcl" />
+				<property name="username" value="MYBATIS" />
+				<property name="password" value="MYBATIS" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- mappers : 실행할 sql문들을 기록해둔 mapper파일들을 관리하는 태그 -->
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/board-mapper.xml" />
+	</mappers>
+</configuration>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+<!-- 
+	resultMap type이 board인 하나 생성하고
+	
+	select id값이 selectListCount, selectList 태그 2개 만들기
+-->  
+
+<resultMap type="board" id="boardResultSet">
+	<result column="BOARD_NO" property="boardNo"/>
+	<result column="BOARD_TITLE" property="boardTitle"/>
+	<result column="BOARD_CONTENT" property="boardContent"/>
+	<result column="BOARD_WRITER" property="boardWriter"/>
+	<result column="CREATE_DATE" property="createDate"/>
+</resultMap>
+
+<select id="selectListCount" parameterType="board" resultMap="boardResultSet">
+	SELECT COUNT(*)
+	FROM BOARD
+</select>
+
+<select id="selectList" parameterType="board" resultMap="boardResultSet">
+	SELECT *
+	FROM BOARD
+</select>
+
+</mapper>
