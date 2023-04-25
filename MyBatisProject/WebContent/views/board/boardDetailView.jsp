@@ -57,8 +57,8 @@
 		<table align="center" border="1">
 			<tr>
 				<td width="100">댓글작성</td>
-				<td width="400"><textarea></textarea></td>
-				<td width="100"><button>등록</button></td>
+				<td width="400"><textarea id="replyContent"></textarea></td>
+				<td width="100"><button onclick="insertReply();">등록</button></td>
 			</tr>
 			<tr>
 				<td colspan="3"><b>댓글(${ list.size() })</b></td> <!-- 또는 fn:length(list) -->
@@ -75,5 +75,11 @@
 		<br>
 		<br>
 	</div>
+	<script>
+		function insertReply(){
+			let replyContent = document.getElementById('replyContent').value;
+			location.href = "<%= request.getContextPath() %>/insert.re?bno=${b.boardNo}&content="+replyContent;
+		}
+	</script>
 </body>
 </html>
